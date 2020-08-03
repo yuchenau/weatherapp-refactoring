@@ -1,4 +1,4 @@
-import React, {useState, useEffect} from 'react';
+import React, {useState, useEffect, useReducer} from 'react';
 import './App.css';
 import Header from './components/Header';
 import Navigation from './components/Navigation';
@@ -6,8 +6,25 @@ import Main from './components/Main';
 import Footer from './components/Footer';
 import { getWeather } from './axios'
 
+const initialState = {
+  citySearch: "",
+  city: "",
+  current: {},
+  forecasts: [],
+  limit: 5,
+  unit: "C"
+}
+
+function reducer(state, action) {
+  switch(action.type) {
+    case 'SET_CITY':
+      return { city: state.city }
+  }
+}
+
 function App() {
   const [citySearch, setCitySearch] = useState("");
+  const [city, dispatch] = useReducer(reducer, initialState)
   const [city, setCity] = useState("");
   const [current, setCurrent] = useState({});
   const [forecasts, setForecasts] = useState([]);
@@ -57,10 +74,10 @@ function App() {
         <Header />
         <Navigation 
           citySearch = {citySearch}
+          unit={unit}
           handleInputChange = {handleInputChange}
           handleSearch = {handleSearch}
           toggleUnit = {toggleUnit}
-          unit={unit}
         />
         <Main
           city = {city}
