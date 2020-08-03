@@ -11,7 +11,13 @@ export default function WeatherCondition(props) {
             {props.city}
           </div>
           <div style={{textAlign: "center", fontSize:14}}>Clear</div>
-          <div className="weather-condition__temp" style={{ fontSize:40 }}>{props.current.minCelsius}°c - {props.current.maxCelsius}°c</div>
+          <div className="weather-condition__temp" style={{ fontSize:40 }}>
+            {props.unit === "C" ? (
+              `${props.current.minCelsius}°${props.unit} - ${props.current.maxCelsius}°${props.unit}`
+            ) : (
+              `${props.current.minFahrenheit}°${props.unit} - ${props.current.maxFahrenheit}°${props.unit}`
+            )}
+          </div>
           <div className="weather-condition__desc">
             <div>
               <img src={umbrella} alt="umbrella" />

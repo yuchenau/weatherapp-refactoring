@@ -12,6 +12,7 @@ function App() {
   const [current, setCurrent] = useState({});
   const [forecasts, setForecasts] = useState([]);
   const [limit, setLimit] = useState(5);
+  const [unit, setUnit] = useState("C");
 
   useEffect(() => {
   getWeather("Brisbane")
@@ -46,6 +47,10 @@ function App() {
   })
   }
 
+  const toggleUnit = () => {
+    unit != "C" ? (setUnit("C")) : (setUnit("F"));
+  }
+
   return (
     <div className="App">
       <div className="weather-channel__container">
@@ -54,10 +59,13 @@ function App() {
           citySearch = {citySearch}
           handleInputChange = {handleInputChange}
           handleSearch = {handleSearch}
+          toggleUnit = {toggleUnit}
+          unit={unit}
         />
         <Main
           city = {city}
           current = {current}
+          unit = {unit}
           forecasts = {forecasts}
           limit = {limit}
           changeLimit = {changeLimit}

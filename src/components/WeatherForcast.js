@@ -26,8 +26,8 @@ export default function WeatherForcast(props) {
               <span className="weather-forecast__icon">
                 <i className="fa fa-clock-o"></i>{format(new Date(forecast.time * 1000), "HH:MM")}
               </span>
-              <span className="weather-forecast__high">{forecast.maxCelsius} °c </span>
-              <span className="weather-forecast__low">{forecast.minCelsius} °c</span>
+              <span className="weather-forecast__high">{ props.unit === "C" ? (forecast.minCelsius) : (forecast.minFahrenheit)} °{props.unit} </span>
+              <span className="weather-forecast__low">{ props.unit === "C" ? (forecast.maxCelsius) : (forecast.maxFahrenheit)} °{props.unit} </span>
             </div>
           ))}
         </section>
