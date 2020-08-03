@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { format } from 'date-fns';
 
 export default function WeatherForcast(props) {
@@ -8,12 +8,14 @@ export default function WeatherForcast(props) {
     return (
         <section className="weather-forecast">
           <div className="forecast__switch">
-            <button className="forecast__switch_0 switch-active"
+            <button 
+                    className={`forecast__switch_0 ${limit === 5? 'switch-active' : ''}`}
                     onClick={() => props.changeLimit(5)}
             >
               5 items
             </button>
-            <button className="forecast__switch_1"
+            <button 
+                    className={`forecast__switch_1 ${limit === 10? 'switch-active' : ''}`}
                     onClick={() => props.changeLimit(10)}
             >
               10 items
