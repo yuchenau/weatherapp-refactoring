@@ -1,9 +1,11 @@
-import React, { useState } from 'react';
+import React, { useContext } from 'react';
 import { format } from 'date-fns';
+import { StateContext } from '../useContext/StateContext';
 
 export default function WeatherForcast(props) {
-    const limit = props.limit;
-    const forecasts = props.forecasts.slice(0,limit);
+    const state = useContext(StateContext);
+    const limit = state.limit;
+    const forecasts = state.forecasts.slice(0,limit);
 
     return (
         <section className="weather-forecast">
@@ -28,8 +30,8 @@ export default function WeatherForcast(props) {
               <span className="weather-forecast__icon">
                 <i className="fa fa-clock-o"></i>{format(new Date(forecast.time * 1000), "HH:MM")}
               </span>
-              <span className="weather-forecast__high">{ props.unit === "C" ? (forecast.minCelsius) : (forecast.minFahrenheit)} °{props.unit} </span>
-              <span className="weather-forecast__low">{ props.unit === "C" ? (forecast.maxCelsius) : (forecast.maxFahrenheit)} °{props.unit} </span>
+              <span className="weather-forecast__high">{ state.unit === "C" ? (forecast.minCelsius) : (forecast.minFahrenheit)} °{state.unit} </span>
+              <span className="weather-forecast__low">{ state.unit === "C" ? (forecast.maxCelsius) : (forecast.maxFahrenheit)} °{state.unit} </span>
             </div>
           ))}
         </section>

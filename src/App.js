@@ -1,35 +1,24 @@
-import React, {useState, useEffect, useReducer} from 'react';
+import React, {useEffect, useReducer} from 'react';
 import './App.css';
 import Header from './components/Header';
 import Navigation from './components/Navigation';
 import Main from './components/Main';
 import Footer from './components/Footer';
 import { getWeather } from './axios'
-
-const initialState = {
-  citySearch: "",
-  city: "",
-  current: {},
-  forecasts: [],
-  limit: 5,
-  unit: "C"
-}
-
-function reducer(state, action) {
-  switch(action.type) {
-    case 'SET_CITY':
-      return { city: state.city }
-  }
-}
+import { initialState } from './useReducer/index';
+import { reducer } from './useReducer/reducer';
+import { StateContext } from './useContext/StateContext';
 
 function App() {
-  const [citySearch, setCitySearch] = useState("");
-  const [city, dispatch] = useReducer(reducer, initialState)
-  const [city, setCity] = useState("");
-  const [current, setCurrent] = useState({});
-  const [forecasts, setForecasts] = useState([]);
-  const [limit, setLimit] = useState(5);
-  const [unit, setUnit] = useState("C");
+  // const [citySearch, setCitySearch] = useState("");
+  // const [city, setCity] = useState("");
+  // const [current, setCurrent] = useState({});
+  // const [forecasts, setForecasts] = useState([]);
+  // const [limit, setLimit] = useState(5);
+  // const [unit, setUnit] = useState("C");
+
+  const [state, dispatch] = useReducer(reducer, initialState);
+  const { citySearch } = state;
 
   useEffect(() => {
   getWeather("Brisbane")
@@ -37,19 +26,24 @@ function App() {
     const city = res.city.name;
     const current = res.current;
     const forecasts = res.forecast.slice(0,10);
-    setCity(city);
-    setCurrent(current);
-    setForecasts(forecasts);
+    // setCity(city);
+    // setCurrent(current);
+    // setForecasts(forecasts);
+    dispatch({ type: "SET_CITY", city });
+    dispatch({ type: "SET_CURRENT", current });
+    dispatch({ type: "SET_FORECASTS", forecasts });
   })
   }, []);
 
   const changeLimit = (number) => {
-    setLimit(number);
+    // setLimit(number);
+    dispatch({ type: "CHANGE_LIMIT", number})
   }
 
   const handleInputChange = (e) => {
     const value = e.target.value;
-    setCitySearch(value);
+    // setCitySearch(value);
+    dispatch({ type: "SET_CITYSEARCH", value })
   }
 
   const handleSearch = () => {
@@ -58,38 +52,51 @@ function App() {
       const city = res.city.name;
       const current = res.current;
       const forecasts = res.forecast.slice(0,10);
-      setCity(city);
-      setCurrent(current);
-      setForecasts(forecasts);
+      // setCity(city);
+      // setCurrent(current);
+      // setForecasts(forecasts);
+      dispatch({ type: "SET_CITY", city});
+      dispatch({ type: "SET_CURRENT", current});
+      dispatch({ type: "SET_FORECASTS", forecasts});
   })
   }
 
   const toggleUnit = () => {
-    unit != "C" ? (setUnit("C")) : (setUnit("F"));
+    // unit != "C" ? 
+    //   (
+    //     // setUnit("C")
+    //     dispatch({ type="SET_UNIT", "C" })
+    //   ) : 
+    //   (
+    //     // setUnit("F")
+    //     dispatch({ type="SET_UNIT", "F" })
+    //   );
   }
 
   return (
+    <StateContext.Provider value={state}>
     <div className="App">
       <div className="weather-channel__container">
         <Header />
         <Navigation 
-          citySearch = {citySearch}
-          unit={unit}
+          // citySearch = {citySearch}
+          // unit={unit}
           handleInputChange = {handleInputChange}
           handleSearch = {handleSearch}
           toggleUnit = {toggleUnit}
         />
         <Main
-          city = {city}
-          current = {current}
-          unit = {unit}
-          forecasts = {forecasts}
-          limit = {limit}
+          // city = {city}
+          // current = {current}
+          // unit = {unit}
+          // forecasts = {forecasts}
+          // limit = {limit}
           changeLimit = {changeLimit}
         />
         <Footer />
       </div>
     </div>
+    </StateContext.Provider>
   );
 }
 

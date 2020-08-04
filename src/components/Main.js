@@ -5,8 +5,10 @@ import WeatherCondition from './WeatherCondition';
 export default function Main(props) {
     return (
         <div>
-            <WeatherCondition city={props.city} current={props.current} unit={props.unit} />
-            <WeatherForcast forecasts={props.forecasts} limit={props.limit} changeLimit={props.changeLimit} unit={props.unit} />
+            {/* <WeatherCondition current={props.current} unit={props.unit} />
+            <WeatherForcast forecasts={props.forecasts} limit={props.limit} changeLimit={props.changeLimit} unit={props.unit} /> */}
+            <WeatherCondition />
+            <WeatherForcast changeLimit={props.changeLimit} />
         </div>
     );
 }
