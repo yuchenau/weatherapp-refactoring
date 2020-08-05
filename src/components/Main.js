@@ -8,7 +8,7 @@ export default function Main(props) {
             {/* <WeatherCondition current={props.current} unit={props.unit} />
             <WeatherForcast forecasts={props.forecasts} limit={props.limit} changeLimit={props.changeLimit} unit={props.unit} /> */}
             <WeatherCondition />
-            <WeatherForcast changeLimit={props.changeLimit} />
+            <WeatherForcast />
         </div>
     );
 }

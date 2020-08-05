@@ -6,6 +6,7 @@ import { StateContext } from '../useContext/StateContext';
 
 export default function WeatherCondition(props) {
     const state = useContext(StateContext);
+
     return (
         <section className="weather-condition">
           <div className="weather-condition__location"

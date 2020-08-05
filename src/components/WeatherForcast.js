@@ -1,24 +1,32 @@
 import React, { useContext } from 'react';
 import { format } from 'date-fns';
 import { StateContext } from '../useContext/StateContext';
+import { DispatchContext } from '../useContext/DispatchContext';
+import { setLimit } from '../useReducer/action';
 
 export default function WeatherForcast(props) {
     const state = useContext(StateContext);
+    const dispatch = useContext(DispatchContext);
+
     const limit = state.limit;
     const forecasts = state.forecasts.slice(0,limit);
+
+    const changeLimit = (number) => {
+      dispatch(setLimit(number));
+    }
 
     return (
         <section className="weather-forecast">
           <div className="forecast__switch">
             <button 
                     className={`forecast__switch_0 ${limit === 5? 'switch-active' : ''}`}
-                    onClick={() => props.changeLimit(5)}
+                    onClick={() => changeLimit(5)}
             >
               5 items
             </button>
             <button 
                     className={`forecast__switch_1 ${limit === 10? 'switch-active' : ''}`}
-                    onClick={() => props.changeLimit(10)}
+                    onClick={() => changeLimit(10)}
             >
               10 items
             </button>

@@ -25,6 +25,11 @@ switch(action.type){
             ...state,
             unit: action.unit
         }
+    case 'SET_LIMIT':
+        return {
+            ...state,
+            limit: action.limit
+        }
     default:
         throw new Error();
 }
